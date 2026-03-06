@@ -1,18 +1,36 @@
 #include <Arduino.h>
+#include <color.h>
+#include <effects.h>
+#include <Adafruit_NeoPixel.h>
+#include <vector>
 
-// put function declarations here:
-int myFunction(int, int);
+NEOFX::pinwheel func{NEOFX::rainbow, 1.0, 1.0};
+
+constexpr int num_neopixels = 7;
+
+std::vector<double> x{0.0, -1, 0.5, 0.866, 1, 0.866, -0.5};
+std::vector<double> y{0.0, 0, 0.866, 0.5, 0, -0.5, -0.866};
+
+Adafruit_NeoPixel pixels(num_neopixels, 13);
+
+double t = 0.0;
+constexpr int wait_time = 30;
+constexpr double delta_t = 0.005;
 
 void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+  pixels.begin();
+  pixels.setBrightness(255/8);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-}
+  t += delta_t;
+  
+  for (int i = 0; i < num_neopixels; i++){
+    NEOFX::RGB col = func(x[i], y[i], t);
+    pixels.setPixelColor(i, col.R*255, col.G*255, col.B*255);
+  }
+  pixels.show();
 
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+  delay(wait_time);
+  // put your main code here, to run repeatedly:
 }
