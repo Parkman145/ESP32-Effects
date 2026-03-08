@@ -11,6 +11,8 @@ constexpr int wait_time = 30;
 constexpr double delta_t = 0.005;
 constexpr int brightness = 255/32;
 constexpr int pin = 13;
+constexpr double scale = 1.0/8.0;
+
 
 NEOFX::pinwheel func{NEOFX::rainbow, 1.0, 1.0};
 
@@ -36,8 +38,8 @@ void setup() {
     double distance = i;
     for (int j = 0; j < row_counts[i]; j++) {
       double angle = 2*PI*(-static_cast<double>(j)/static_cast<double>(row_counts[i]))+2*PI;
-      x.push_back(std::cos(angle)*distance);
-      y.push_back(std::sin(angle)*distance);
+      x.push_back(std::cos(angle)*distance*scale);
+      y.push_back(std::sin(angle)*distance*scale);
     }
   }
   pixels.begin();
