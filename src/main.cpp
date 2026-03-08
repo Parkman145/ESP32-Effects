@@ -4,12 +4,12 @@
 #include <Adafruit_NeoPixel.h>
 #include <vector>
 
-NEOFX::pinwheel func{NEOFX::rainbow, 1.0, 1.0};
+NEOFX::cycle func{NEOFX::rainbow, 1.0};
 
-constexpr int num_neopixels = 7;
+constexpr int num_neopixels = 181;
 
-std::vector<double> x{0.0, -1, 0.5, 0.866, 1, 0.866, -0.5};
-std::vector<double> y{0.0, 0, 0.866, 0.5, 0, -0.5, -0.866};
+// std::vector<double> x{0.0, -1, 0.5, 0.866, 1, 0.866, -0.5};
+// std::vector<double> y{0.0, 0, 0.866, 0.5, 0, -0.5, -0.866};
 
 Adafruit_NeoPixel pixels(num_neopixels, 13);
 
@@ -19,14 +19,14 @@ constexpr double delta_t = 0.005;
 
 void setup() {
   pixels.begin();
-  pixels.setBrightness(255/8);
+  pixels.setBrightness(255/4);
 }
 
 void loop() {
   t += delta_t;
   
   for (int i = 0; i < num_neopixels; i++){
-    NEOFX::RGB col = func(x[i], y[i], t);
+    NEOFX::RGB col = func(0, 0, t);
     pixels.setPixelColor(i, col.R*255, col.G*255, col.B*255);
   }
   pixels.show();
