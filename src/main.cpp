@@ -24,12 +24,15 @@ void setup() {
 
 void loop() {
   t += delta_t;
-  
-  for (int i = 0; i < num_neopixels; i++){
-    NEOFX::RGB col = func(0, 0, t);
-    pixels.setPixelColor(i, col.R*255, col.G*255, col.B*255);
-  }
+  pixels.fill(0);
   pixels.show();
+  delay(1000);
+  for (int i = 0; i < num_neopixels; i++){
+    // NEOFX::RGB col = func(0, 0, t);
+    pixels.setPixelColor(i, 255, 255, 255);
+    delay(10);
+    pixels.show();
+  }
 
   delay(wait_time);
   // put your main code here, to run repeatedly:
