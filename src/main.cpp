@@ -6,7 +6,7 @@
 
 
 // Constants
-constexpr int num_neopixels = 181;
+constexpr int num_neopixels = 241;
 constexpr int wait_time = 30;
 constexpr double delta_t = 0.005;
 constexpr int brightness = 255/32;
