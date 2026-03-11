@@ -11,7 +11,8 @@ constexpr int wait_time = 30;
 constexpr double delta_t = 0.005;
 constexpr int brightness = 255/32;
 constexpr int pin = 13;
-constexpr double scale = 1.0/8.0;
+constexpr double scale = 1.0/9.0;
+std::vector<int> row_counts{1, 8, 12, 16, 24, 32, 40, 48, 60};
 
 
 NEOFX::pinwheel func{NEOFX::rainbow, 1.0, 1.0};
@@ -27,7 +28,6 @@ double t = 0.0;
 std::vector<double> x;
 std::vector<double> y;
 
-std::vector<int> row_counts{1, 8, 12, 16, 24, 32, 40, 48};
 
 
 void setup() {
