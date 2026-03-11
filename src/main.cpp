@@ -3,6 +3,7 @@
 #include <effects.h>
 #include <Adafruit_NeoPixel.h>
 #include <vector>
+#include <effect_presets.h>
 
 
 // Constants
