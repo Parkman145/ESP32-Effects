@@ -16,7 +16,7 @@ constexpr double scale = 1.0/9.0;
 std::vector<int> row_counts{1, 8, 12, 16, 24, 32, 40, 48, 60};
 
 
-NEOFX::pinwheel func{NEOFX::rainbow, 1.0, 1.0};
+NEOFX::solid func{NEOFX::RGB(0.0, 0.5, 0.0)};
 
 // Locations for mini disk
 // std::vector<double> x{0.0, -1, 0.5, 0.866, 1, 0.866, -0.5};
@@ -29,6 +29,39 @@ double t = 0.0;
 std::vector<double> x;
 std::vector<double> y;
 
+
+float lx = 0;
+float ly = 0.5;
+float lop = 1.0;
+float rx = 0;
+float ry = 0;
+float rop = 0;
+
+String recieve_message(){
+  Serial.find('<');
+  return Serial.readStringUntil('>');
+}
+
+void decode_message(String str){
+  char* token = strtok(str.begin(), ",>");
+  if (token == nullptr) return;
+  lx = atof(token);
+  token = strtok(nullptr, ",>");
+  if (token == nullptr) return;
+  ly = atof(token);
+  token = strtok(nullptr, ",>");
+  if (token == nullptr) return;
+  lop = atof(token);
+  token = strtok(nullptr, ",>");
+  if (token == nullptr) return;
+  rx = atof(token);
+  token = strtok(nullptr, ",>");
+  if (token == nullptr) return;
+  ry = atof(token);
+  token = strtok(nullptr, ",>");
+  if (token == nullptr) return;
+  rop = atof(token);  
+}
 
 
 void setup() {
@@ -45,10 +78,18 @@ void setup() {
   }
   pixels.begin();
   pixels.setBrightness(brightness);
+  Serial.begin(115200);
+  pinMode(14, INPUT);
+  Serial.println("beginning");
 }
 
 void loop() {
   t += delta_t;
+  String message = recieve_message();
+  decode_message(message); 
+  func.color.R = lx;
+  func.color.G = ly;
+  func.color.B = lop;
 
   for (int i = 0; i < num_neopixels; i++){
     NEOFX::RGB col = func(x[i], y[i], t);
