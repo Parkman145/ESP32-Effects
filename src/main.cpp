@@ -16,7 +16,7 @@ constexpr double scale = 1.0/9.0;
 std::vector<int> row_counts{1, 8, 12, 16, 24, 32, 40, 48, 60};
 
 
-NEOFX::solid func{NEOFX::RGB(0.0, 0.5, 0.0)};
+auto func = NEOFX::effect_presets::rainbow_chaser;
 
 // Locations for mini disk
 // std::vector<double> x{0.0, -1, 0.5, 0.866, 1, 0.866, -0.5};
@@ -84,12 +84,9 @@ void setup() {
 }
 
 void loop() {
-  t += delta_t;
+  t += delta_t*lx*lx*lx*10;
   String message = recieve_message();
   decode_message(message); 
-  func.color.R = lx;
-  func.color.G = ly;
-  func.color.B = lop;
 
   for (int i = 0; i < num_neopixels; i++){
     NEOFX::RGB col = func(x[i], y[i], t);
